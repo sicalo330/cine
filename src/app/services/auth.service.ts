@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'firebase/auth';
-import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc,updateDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from 'src/environment/environment.development';
+import { collectionData } from '@angular/fire/firestore'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,14 +54,39 @@ export class AuthService {
     return this.userData;
   }
 
-  async agregarPelicula(item: any, tabla: string) {
-    const docRef = await addDoc(collection(FIRESTORE_DB, tabla), {
-      nombrePelicula: item.name,
-      duracion: item.duration,
-      horario: item.showtime,
-      disponibilidad: item.availability,
-      generos: item.genres,
+  async addMovie(item: any, table: string) {
+    const docRef = await addDoc(collection(FIRESTORE_DB, table), {
+      name: item.name,
+      image: item.image,
+      duration: item.duration,
+      showTime: item.showtime,
+      availability: item.availability,
+      genres: item.genres,
+      description:item.description
     });
-    console.log("Document written with ID: ", docRef.id);
   }
+
+  getData(table: string): Observable<any[]> {
+    return this.firestore.collection(table).valueChanges({ idField: 'id' });
+  }
+
+  async updateMovie(movieId: string, updatedData: any, table: string): Promise<void> {
+    console.log(movieId);
+    try {
+        const sanitizedData = Object.fromEntries(
+            Object.entries(updatedData).filter(([_, v]) => v !== undefined)
+        ) as { [key: string]: any }; // <- Type assertion aquí
+
+        // Referencia al documento que deseas actualizar
+        const productoRef = doc(FIRESTORE_DB, table, movieId);
+
+        // Actualizamos el documento con los datos pasados
+        await updateDoc(productoRef, sanitizedData);
+    } catch (error) {
+        console.error('Error al actualizar la película:', error);
+        throw error;
+    }
+  }
+
 }
+

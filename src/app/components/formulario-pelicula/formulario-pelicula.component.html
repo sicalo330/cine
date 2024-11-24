@@ -16,6 +16,17 @@
           >
         </div>
 
+        <!-- Url de la imágen-->
+        <div class="form-group">
+          <label for="movieName">Url de la imágen</label>
+          <input type="text" class="form-control" id="movieImage" formControlName="image" />
+          <span
+            class="danger"
+            *ngIf="movieData.get('image')!.invalid && movieData.get('image')!.touched"
+            >El nombre es <strong>obligatorio</strong></span
+          >
+        </div>
+
         <!-- Géneros -->
         <div class="form-group">
           <label>Géneros</label>
@@ -78,6 +89,17 @@
             class="danger"
             *ngIf="movieData.get('availability')!.invalid && movieData.get('availability')!.touched"
             >La disponibilidad es <strong>obligatoria</strong></span
+          >
+        </div>
+
+        <!-- Descripción-->
+        <div class="form-group">
+          <label for="movieName">Descripción</label>
+          <textarea name="movieDescription" id="movieDescription"  class="form-control" formControlName="description"></textarea>
+          <span
+            class="danger"
+            *ngIf="movieData.get('description')!.invalid && movieData.get('description')!.touched"
+            >El nombre es <strong>obligatorio</strong></span
           >
         </div>
 

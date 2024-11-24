@@ -1,0 +1,29 @@
+<div>
+    <div class="card h-100">
+        <div class="card-body">
+            <h5 class="card-title">{{ movie.name }}</h5>
+            <img src={{movie.image}} alt="Pelicula bonita" class="w-100">
+            <h6 class="card-subtitle mb-2 text-muted">Duración: {{ movie.duration }} minutos</h6>
+            <p class="card-text">
+                <strong>Géneros:</strong> {{ movie.genres.join(', ') }}
+            </p>
+            <p class="card-text">
+                <strong>Disponibilidad:</strong> {{ movie.availability }}
+            </p>
+            <p class="card-text">
+                <strong>Fecha:</strong> {{ movie.showTime }}
+            </p>
+            <p class="card-text">
+                <strong>Sinopsis:</strong> {{ movie.description }}
+            </p>
+        </div>
+    </div>
+    <div class="d-flex">
+        <button class="btn btn-primary" (click)="addQuantity()">Aumentar</button>
+        <h1>{{quantity}}</h1>
+        <button class="btn btn-primary" (click)="downQuantity()">Decrementar</button>
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="buyTicket()">Pagar boletas</button>
+    </div>
+</div>

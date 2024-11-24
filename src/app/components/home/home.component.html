@@ -1,3 +1,29 @@
 <p>home works!</p>
-<button (click)="crearPelicula()" class="btn btn-primary">Crear película</button>
-<h1>Abajo aparecerán las películas</h1>
+<button (click)="crearPelicula()" class="btn btn-primary mb-3">Crear película</button>
+
+<h1 class="mb-4">Abajo aparecerán las películas</h1>
+
+<div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let movie of listMovie">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.name }}</h5>
+                <img src={{movie.image}} alt="Pelicula bonita" class="w-100">
+                <h6 class="card-subtitle mb-2 text-muted">Duración: {{ movie.duration }} minutos</h6>
+                <p class="card-text">
+                    <strong>Géneros:</strong> {{ movie.genres.join(', ') }}
+                </p>
+                <p class="card-text">
+                    <strong>Disponibilidad:</strong> {{ movie.availability }}
+                </p>
+                <p class="card-text">
+                    <strong>Fecha:</strong> {{ movie.showTime }}
+                </p>
+                <p class="card-text">
+                    <strong>Sinopsis:</strong> {{ movie.description }}
+                </p>
+                <button (click)="openDialog(movie)" class="btn btn-primary">Comprar tiquete</button>
+            </div>
+        </div>
+    </div>
+</div>

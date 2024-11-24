@@ -20,6 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component'; 
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { MatInputModule } from '@angular/material/input';
     LoginComponent,
     HomeComponent,
     RegisterFormComponent,
-    FormularioPeliculaComponent
+    FormularioPeliculaComponent,
+    BuyTicketComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

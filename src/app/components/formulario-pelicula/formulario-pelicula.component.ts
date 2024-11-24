@@ -16,10 +16,12 @@ export class FormularioPeliculaComponent {
   constructor(private fb: FormBuilder,private auth:AuthService,private router:Router) {
     this.movieData = this.fb.group({
       name: ['', Validators.required], // Nombre de la película
+      image: ['', Validators.required], // Nombre de la película
       duration: ['', Validators.required], // Duración de la película
       showtime: ['', Validators.required], // Horario de función
       availability: ['', Validators.required], // Disponibilidad de entradas
       genres: [[]], // Géneros seleccionados (array)
+      description: ['', Validators.required], // Disponibilidad de entradas
     });
   }
 
@@ -43,10 +45,12 @@ export class FormularioPeliculaComponent {
     if (this.movieData.valid) {
       const data: any = {
         name: this.movieData.get('name')!.value,
+        image: this.movieData.get('image')!.value,
         duration: this.movieData.get('duration')!.value,
         showtime: this.movieData.get('showtime')!.value,
         availability: this.movieData.get('availability')!.value,
         genres: this.movieData.get('genres')!.value,
+        description: this.movieData.get('description')!.value,
       };
 
       let dateString = data.showtime.toString().split(' ')
@@ -54,11 +58,14 @@ export class FormularioPeliculaComponent {
 
       data.showtime = dateShowtime
 
-      this.auth.agregarPelicula(data,'pelicula').then(() => {
+      console.log(data)
+
+      this.auth.addMovie(data,'movie').then(() => {
         this.router.navigate(['home'])
       }).catch((err) => {
         alert(err)
       })
+
     } else {
       alert("ALgún campo es incorrecto")
     }
