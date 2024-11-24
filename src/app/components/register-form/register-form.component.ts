@@ -52,8 +52,6 @@ export class RegisterFormComponent {
       history: this.userData.get('history')!.value,
       preferences: this.userData.get('preferences')!.value,
     };
-
-    console.log(data)
     
     this.authService.register(data.email, data.password, {
         history: data.history,
@@ -61,7 +59,7 @@ export class RegisterFormComponent {
       })
       .then(() => {
         console.log('Usuario registrado con éxito');
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['login']);
       })
       .catch((error) => {
         console.error('Error al registrar usuario:', error);

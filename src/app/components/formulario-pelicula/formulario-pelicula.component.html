@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row justify-content-center main-container">
+    <div class="border p-2">
+      <div class="card-header">Crear Película</div>
+    </div>
+    <div class="border">
+      <form [formGroup]="movieData" (ngSubmit)="submitForm()">
+        <!-- Nombre de la película -->
+        <div class="form-group">
+          <label for="movieName">Nombre</label>
+          <input type="text" class="form-control" id="movieName" formControlName="name" />
+          <span
+            class="danger"
+            *ngIf="movieData.get('name')!.invalid && movieData.get('name')!.touched"
+            >El nombre es <strong>obligatorio</strong></span
+          >
+        </div>
+
+        <!-- Géneros -->
+        <div class="form-group">
+          <label>Géneros</label>
+          <div *ngFor="let option of preferencesOptions">
+            <input
+              type="checkbox"
+              [value]="option"
+              (change)="onCheckboxChange($event, 'genres')"
+            />
+            {{ option }}
+          </div>
+        </div>
+
+        <!-- Duración -->
+        <div class="form-group">
+          <label for="movieDuration">Duración</label>
+          <input
+            type="number"
+            class="form-control"
+            id="movieDuration"
+            formControlName="duration"
+            placeholder="Duración en minutos"
+          />
+          <span
+            class="danger"
+            *ngIf="movieData.get('duration')!.invalid && movieData.get('duration')!.touched"
+            >La duración es <strong>obligatoria</strong></span
+          >
+        </div>
+
+        <!-- Horario -->
+        <label for="movieShowtime">Horario de función</label>
+        <mat-form-field appearance="fill">
+          <mat-label>Selecciona la fecha y hora</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="showtime"
+            placeholder="Elige la fecha"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <span
+          class="danger"
+          *ngIf="movieData.get('showtime')!.invalid && movieData.get('showtime')!.touched"
+          >El horario es <strong>obligatorio</strong></span
+        >
+
+        <!-- Disponibilidad -->
+        <div class="form-group">
+          <label for="movieAvailability">Disponibilidad de entradas</label>
+          <input
+            type="number"
+            class="form-control"
+            id="movieAvailability"
+            formControlName="availability"
+          />
+          <span
+            class="danger"
+            *ngIf="movieData.get('availability')!.invalid && movieData.get('availability')!.touched"
+            >La disponibilidad es <strong>obligatoria</strong></span
+          >
+        </div>
+
+        <!-- Botón de envío -->
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary mt-2 mb-2">Crear Película</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

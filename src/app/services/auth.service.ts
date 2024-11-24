@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'firebase/auth';
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+import { FIRESTORE_DB } from 'src/environment/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +50,16 @@ export class AuthService {
   // Método para obtener el usuario actual
   getUser(): User | null {
     return this.userData;
+  }
+
+  async agregarPelicula(item: any, tabla: string) {
+    const docRef = await addDoc(collection(FIRESTORE_DB, tabla), {
+      nombrePelicula: item.name,
+      duracion: item.duration,
+      horario: item.showtime,
+      disponibilidad: item.availability,
+      generos: item.genres,
+    });
+    console.log("Document written with ID: ", docRef.id);
   }
 }

@@ -13,13 +13,21 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { firebaseConfig } from 'src/environment/environment.development';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { FormularioPeliculaComponent } from './components/formulario-pelicula/formulario-pelicula.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//Angular material
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    FormularioPeliculaComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +35,11 @@ import { RegisterFormComponent } from './components/register-form/register-form.
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
