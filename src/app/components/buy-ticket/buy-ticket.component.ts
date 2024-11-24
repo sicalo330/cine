@@ -70,7 +70,7 @@ export class BuyTicketComponent implements OnInit {
       console.log(this.movie.showTime)
       console.log(user?.['name'])
       console.log(user?.['email'])
-      this.auth.addBill(this.movie.name,this.quantity,this.movie.duration,this.movie.showTime,user?.['name'],user?.['email']).then(() => {
+      this.auth.addBill(this.userId,this.movie.name,this.quantity,this.movie.duration,this.movie.showTime,user?.['name'],user?.['email']).then(() => {
         this.mat.closeAll()
       }).catch((error) => {
         console.log(error)

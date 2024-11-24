@@ -21,7 +21,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
-import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component'; 
+import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
+import { BillComponent } from './components/bill/bill.component'; 
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component
     HomeComponent,
     RegisterFormComponent,
     FormularioPeliculaComponent,
-    BuyTicketComponent
+    BuyTicketComponent,
+    BillComponent
   ],
   imports: [
     BrowserModule,

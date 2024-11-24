@@ -1,31 +1,41 @@
-<div class="d-flex justify-content-between">
-    <button (click)="createMovie()" class="btn btn-primary mb-3">Crear película</button>
-    <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
-</div>
-
-<h1 class="mb-4">Abajo aparecerán las películas</h1>
-
-<div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let movie of listMovie">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">{{ movie.name }}</h5>
-                <img src={{movie.image}} alt="Pelicula bonita" class="w-100">
-                <h6 class="card-subtitle mb-2 text-muted">Duración: {{ movie.duration }} minutos</h6>
-                <p class="card-text">
-                    <strong>Géneros:</strong> {{ movie.genres.join(', ') }}
-                </p>
-                <p class="card-text">
-                    <strong>Disponibilidad:</strong> {{ movie.availability }}
-                </p>
-                <p class="card-text">
-                    <strong>Fecha:</strong> {{ movie.showTime }}
-                </p>
-                <p class="card-text">
-                    <strong>Sinopsis:</strong> {{ movie.description }}
-                </p>
-                <button (click)="openDialog(movie)" class="btn btn-primary">Comprar tiquete</button>
-            </div>
-        </div>
+<div class="container mt-4">
+    <!-- Controles superiores -->
+    <div class="d-flex justify-content-between mb-4">
+      <button (click)="createMovie()" class="btn btn-primary">Crear película</button>
+      <button (click)="goBill()" class="btn btn-primary">Ver facturas</button>
+      <button (click)="logout()" class="btn btn-danger">Cerrar sesión</button>
     </div>
-</div>
+  
+    <!-- Listado de películas -->
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let movie of listMovie">
+        <div class="card h-100 shadow-sm">
+          <!-- Imagen de la película -->
+          <img src="{{ movie.image }}" alt="Pelicula bonita" class="card-img-top img-fluid" style="height: 250px; object-fit: cover;">
+          
+          <!-- Información de la película -->
+          <div class="card-body">
+            <h5 class="card-title text-primary">{{ movie.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Duración: {{ movie.duration }} minutos</h6>
+            <p class="card-text">
+              <strong>Géneros:</strong> {{ movie.genres.join(', ') }}
+            </p>
+            <p class="card-text">
+              <strong>Disponibilidad:</strong> 
+              <span [ngClass]="{'badge bg-success': movie.availability === 'Disponible', 'badge bg-danger': movie.availability === 'Agotado'}">
+                {{ movie.availability }}
+              </span>
+            </p>
+            <p class="card-text">
+              <strong>Fecha:</strong> {{ movie.showTime }}
+            </p>
+            <p class="card-text">
+              <strong>Sinopsis:</strong> {{ movie.description }}
+            </p>
+            <button (click)="openDialog(movie)" class="btn btn-primary w-100">Comprar tiquete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

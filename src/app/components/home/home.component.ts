@@ -36,4 +36,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  goBill(){
+    this.router.navigate(['bill'])
+  }
+
 }

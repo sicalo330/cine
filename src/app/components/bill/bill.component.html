@@ -1,0 +1,29 @@
+<div class="container mt-4">
+    <button (click)="back()" class="btn btn-primary">Volver</button>
+    <div *ngFor="let bill of dataBill" class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-primary">{{ bill.name_movie }}</h5>
+        <p class="card-text">
+          <strong>Usuario:</strong> {{ bill.nameUser }} <br>
+          <strong>Email:</strong> {{ bill.emailUser }} <br>
+          <strong>ID de Usuario:</strong> {{ bill.userId }}
+        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <p>
+              <strong>Duración de la película:</strong> {{ bill.duration_movie }}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p>
+              <strong>Horario:</strong> {{ bill.showTime_movie }}
+            </p>
+          </div>
+        </div>
+        <p>
+          <span class="badge bg-success"><strong>Cantidad de boletos:</strong> {{ bill.quantity_ticket }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  

@@ -88,23 +88,6 @@ export class AuthService {
       const docRef = doc(FIRESTORE_DB,'users',userId)
       const docSnap = await getDoc(docRef)
       return docSnap.data()
-      /*
-      
-      // Crear referencia al documento en la colección 'users'
-      const docRef = doc(FIRESTORE_DB, 'users', userId);
-  
-      // Obtener el documento
-      const docSnap = await getDoc(docRef);
-  
-      if (docSnap.exists()) {
-        // Retorna el objeto del documento, junto con su ID
-        return { id: docSnap.id, ...docSnap.data() };
-      } else {
-        console.warn(`No se encontró un usuario con ID: ${userId}`);
-        return null;
-      }
-      */
-      
     } catch (error) {
       console.error('Error al obtener el usuario:', error);
       throw error;
@@ -144,8 +127,9 @@ export class AuthService {
     }
   }
 
-  async addBill(name:string, quantity:number, duration:number, showtime:string, nameUser:string,emailUser:string){
+  async addBill(userId:string | undefined,name:string, quantity:number, duration:number, showtime:string, nameUser:string,emailUser:string){
     const docRef = await addDoc(collection(FIRESTORE_DB, 'bill'), {
+      userId:userId,
       nameUser:nameUser,
       emailUser:emailUser,
       name_movie: name,
@@ -153,6 +137,23 @@ export class AuthService {
       duration_movie: duration,
       showTime_movie: showtime
     });
+  }
+
+  async getBill(userId: string | undefined) {
+    if (!userId) {
+      console.error('Error: userId no proporcionado.');
+      return null;
+    }
+  
+    try {
+      const docRef = doc(FIRESTORE_DB,'bill',userId)
+      const docSnap = await getDoc(docRef)
+      return docSnap.data()
+      
+    } catch (error) {
+      console.error('Error al obtener el usuario:', error);
+      throw error;
+    }
   }
 
 }
