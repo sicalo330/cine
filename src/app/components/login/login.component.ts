@@ -38,7 +38,7 @@ userData!: FormGroup
   }
 
   formularioRegistro(){
-    console.log("#akjsdsdj")
+    this.router.navigate(['register'])
   }
 
 }

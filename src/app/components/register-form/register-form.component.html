@@ -1,1 +1,81 @@
-<p>register-form works!</p>
+<div class="container">
+    <button (click)="backLogin()" class="btn btn-primary">Volver a login</button>
+    <div class="row justify-content-center main-container">
+      <div class="border p-2">
+        <div class="card-header">Registro de usuarios</div>
+      </div>
+      <div class="border">
+        <form method="post" [formGroup]="userData">
+          <div class="form-group">
+            <label for="exampleInputEmail">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail"
+              formControlName="email"
+            />
+            <span
+              class="danger"
+              *ngIf="
+                userData.get('email')!.invalid &&
+                userData.get('email')!.touched
+              "
+              >La Identificación es <strong>Obligatoria</strong></span
+            >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword"
+              formControlName="password"
+            />
+            <span
+              class="danger"
+              *ngIf="
+                userData.get('password')!.invalid &&
+                userData.get('password')!.touched
+              "
+              >La Contraseña es <strong>Obligatoria</strong></span
+            >
+          </div>
+  
+          <!-- Historial -->
+          <div class="form-group">
+            <label>Historial</label>
+            <div *ngFor="let option of historyOptions">
+              <input
+                type="checkbox"
+                [value]="option"
+                (change)="onCheckboxChange($event, 'history')"
+              />{{ option }}
+            </div>
+          </div>
+  
+          <!-- Preferencias -->
+          <div class="form-group">
+            <label>Preferencias</label>
+            <div *ngFor="let option of preferencesOptions">
+              <input
+                type="checkbox"
+                [value]="option"
+                (change)="onCheckboxChange($event, 'preferences')"
+              />{{ option }}
+            </div>
+          </div>
+  
+          <div class="d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-primary mt-2 mb-2"
+              (click)="register()"
+            >
+              Crear usuario
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
