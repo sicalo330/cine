@@ -58,8 +58,6 @@ export class FormularioPeliculaComponent {
 
       data.showtime = dateShowtime
 
-      console.log(data)
-
       this.auth.addMovie(data,'movie').then(() => {
         this.router.navigate(['home'])
       }).catch((err) => {

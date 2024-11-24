@@ -40,6 +40,25 @@
               >La Contraseña es <strong>Obligatoria</strong></span
             >
           </div>
+
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="exampleInputNombre">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputPassword"
+              formControlName="name"
+            />
+            <span
+              class="danger"
+              *ngIf="
+                userData.get('name')!.invalid &&
+                userData.get('name')!.touched
+              "
+              >La Contraseña es <strong>Obligatoria</strong></span
+            >
+          </div>
   
           <!-- Historial -->
           <div class="form-group">

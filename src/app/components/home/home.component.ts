@@ -18,12 +18,16 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.auth.getData('movie').subscribe((data) =>{
       this.listMovie = data
-      console.log(this.listMovie)
     })
   }
 
-  crearPelicula(){
+  createMovie(){
     this.router.navigate(['formularioPelicula']);
+  }
+
+  async logout(){
+    await this.auth.logout()
+    this.router.navigate(['login'])
   }
 
   openDialog(movieData:any){

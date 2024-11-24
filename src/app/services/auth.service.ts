@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'firebase/auth';
-import { collection, addDoc, doc,updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc,updateDoc,getDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from 'src/environment/environment.development';
-import { collectionData } from '@angular/fire/firestore'
+import firebase from 'firebase/compat/app';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,8 +22,25 @@ export class AuthService {
   }
 
   // Método para iniciar sesión con correo y contraseña
-  login(email: string, password: string): Promise<any> {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
+  async login(email: string, password: string): Promise<any> {
+    try {
+      // Iniciar sesión con Firebase
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+
+      // Obtener el token de acceso (ID Token)
+      const token = await userCredential.user?.getIdToken();
+
+      if (token) {
+        // Guardar el token en localStorage
+        localStorage.setItem('authToken', token);
+      }
+
+      // Retornar información del usuario (opcional)
+      return userCredential.user;
+    } catch (error) {
+      console.error('Error en login:', error);
+      throw error;
+    }
   }
 
   register(email: string, password: string, additionalData: any): Promise<any> {
@@ -45,13 +62,53 @@ export class AuthService {
   }
 
   // Método para cerrar sesión
-  logout(): Promise<void> {
-    return this.afAuth.signOut();
+  logout(): void {
+    this.afAuth.signOut();
+    localStorage.removeItem('authToken');
   }
 
   // Método para obtener el usuario actual
-  getUser(): User | null {
-    return this.userData;
+  async getUserInfo(): Promise<firebase.User | null> {
+    try {
+      const currentUser = await this.afAuth.currentUser;
+      return currentUser;
+    } catch (error) {
+      console.error('Error al obtener la información del usuario:', error);
+      return null;
+    }
+  }
+
+  async getUser(userId: string | undefined) {
+    if (!userId) {
+      console.error('Error: userId no proporcionado.');
+      return null;
+    }
+  
+    try {
+      const docRef = doc(FIRESTORE_DB,'users',userId)
+      const docSnap = await getDoc(docRef)
+      return docSnap.data()
+      /*
+      
+      // Crear referencia al documento en la colección 'users'
+      const docRef = doc(FIRESTORE_DB, 'users', userId);
+  
+      // Obtener el documento
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        // Retorna el objeto del documento, junto con su ID
+        return { id: docSnap.id, ...docSnap.data() };
+      } else {
+        console.warn(`No se encontró un usuario con ID: ${userId}`);
+        return null;
+      }
+      */
+      
+    } catch (error) {
+      console.error('Error al obtener el usuario:', error);
+      throw error;
+    }
   }
 
   async addMovie(item: any, table: string) {
@@ -71,7 +128,6 @@ export class AuthService {
   }
 
   async updateMovie(movieId: string, updatedData: any, table: string): Promise<void> {
-    console.log(movieId);
     try {
         const sanitizedData = Object.fromEntries(
             Object.entries(updatedData).filter(([_, v]) => v !== undefined)
@@ -86,6 +142,17 @@ export class AuthService {
         console.error('Error al actualizar la película:', error);
         throw error;
     }
+  }
+
+  async addBill(name:string, quantity:number, duration:number, showtime:string, nameUser:string,emailUser:string){
+    const docRef = await addDoc(collection(FIRESTORE_DB, 'bill'), {
+      nameUser:nameUser,
+      emailUser:emailUser,
+      name_movie: name,
+      quantity_ticket: quantity,
+      duration_movie: duration,
+      showTime_movie: showtime
+    });
   }
 
 }

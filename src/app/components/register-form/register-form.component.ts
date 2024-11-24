@@ -49,20 +49,20 @@ export class RegisterFormComponent {
     const data = {
       email: this.userData.get('email')!.value,
       password: this.userData.get('password')!.value,
+      name: this.userData.get('name')!.value,
       history: this.userData.get('history')!.value,
       preferences: this.userData.get('preferences')!.value,
     };
-    
+  
     this.authService.register(data.email, data.password, {
+        name:data.name,
         history: data.history,
         preferences: data.preferences,
       })
       .then(() => {
-        console.log('Usuario registrado con éxito');
         this.router.navigate(['login']);
       })
       .catch((error) => {
-        console.error('Error al registrar usuario:', error);
         let mensaje
         switch (error.code) {
             case 'auth/weak-password':
